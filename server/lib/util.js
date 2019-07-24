@@ -50,7 +50,7 @@ module.exports = {
   /**
    * Event listener for HTTP server "listening" event.
    */
-  onListening(server) {
+  onServerListening(server) {
     return function () {
       const addr = server.address();
       const bind = typeof addr === 'string'
@@ -58,5 +58,12 @@ module.exports = {
         : 'port ' + addr.port;
       debug('Listening on ' + bind);
     }
+  },
+
+  /**
+   * Event listener for Socket.io "connection" event
+   */
+  onSocketConnected(socket) {
+    debug("Socket.io client connected");
   }
 }
