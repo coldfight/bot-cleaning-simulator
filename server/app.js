@@ -34,7 +34,7 @@ app.use(require("./middleware/cors"));
 /**
  * Setup routes
  */
-app.use('/api', require("./routes/api"));
+app.use('/api', require("./routes/api")(io));
 
 /**
  * Listen on provided port, on all network interfaces.
