@@ -1,20 +1,31 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require("express");
+const logger = require("morgan");
+const http = require("http");
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const util = require("./lib/util");
 
-var app = express();
+const app = express();
 
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+/**
+ * Get port from environment and store in Express.
+ */
+const port = util.normalizePort(process.env.PORT || "3000");
+app.set("port", port);
 
-module.exports = app;
+/**
+ * Create HTTP server.
+ */
+const server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', util.onError);
+server.on('listening', util.onListening(server));
+
